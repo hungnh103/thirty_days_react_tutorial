@@ -45,6 +45,10 @@ class App extends Component {
       html: false,
       css: false,
       javascript: false
+    },
+    touched: {
+      firstName: false,
+      lastName: false
     }
   }
 
@@ -61,6 +65,28 @@ class App extends Component {
     } else {
       this.setState({ [name]: value })
     }
+  }
+
+  handleBlur = (e) => {
+    const { name } = e.target
+    this.setState({
+      touched: { ...this.state.touched, [name]: true }
+    })
+  }
+
+  validate = () => {
+    const errors = {
+      firstName: ''
+    }
+
+    if (
+      (this.state.touched.firstName && this.state.firstName.length < 3) ||
+      (this.state.touched.firstName && this.state.firstName.length > 12)
+    ) {
+      errors.firstName = 'First name must be between 3 and 12'
+    }
+
+    return errors
   }
 
   handleSubmit = (e) => {
@@ -107,11 +133,12 @@ class App extends Component {
 
   render() {
     let gender = this.state.gender
+    const {firstName} = this.validate()
 
     return (
       <div className='App'>
         <h3>Add Student</h3>
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmit} noValidate>
           <div className='row'>
             <div className='form-group'>
               <label htmlFor="firstName">First Name </label>
@@ -119,8 +146,10 @@ class App extends Component {
                 type="text"
                 name='firstName'
                 onChange={this.handleChange}
+                onBlur={this.handleBlur}
                 placeholder='First Name'
               />
+              <small>{firstName}</small>
             </div>
 
             <div className='form-group'>
