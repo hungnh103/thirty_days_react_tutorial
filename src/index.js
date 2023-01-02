@@ -3,22 +3,32 @@ import ReactDOM from 'react-dom/client';
 
 class App extends Component {
   state = {
-    x: '',
-    y: ''
+    top: 0,
+    left: 0
   }
 
-  getMouseLocation = (e) => {
+  moveObject = () => {
     this.setState({
-      x: e.clientX,
-      y: e.clientY
+      top: Math.floor(Math.random() * 501),
+      left: Math.floor(Math.random() * 901)
     })
   }
 
   render() {
+    const contentStyle = {
+      top: this.state.top,
+      left: this.state.left
+    }
+
     return (
-      <div className='app' onMouseMove={this.getMouseLocation}>
-        <p>x coord: {this.state.x}</p>
-        <p>y coord: {this.state.y}</p>
+      <div className='app'>
+        <div
+          className='content'
+          onMouseEnter={this.moveObject}
+          style={contentStyle}
+        >
+          30 Days Of React
+        </div>
       </div>
     )
   }
