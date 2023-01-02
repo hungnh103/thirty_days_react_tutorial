@@ -8,6 +8,8 @@ class App extends React.Component {
     loggedIn: false,
     techs: ['HTML', 'CSS', 'JS'],
     message: 'Click "Show Time" or "Greet People" to change me',
+    backgroundColor: 'white',
+    color: 'black'
   }
 
   handleLogin = () => {
@@ -48,6 +50,21 @@ class App extends React.Component {
     this.setState({ message })
   }
 
+  changeBackground = () => {
+    let backgroundColor
+    let color
+
+    if(this.state.backgroundColor === 'white') {
+      backgroundColor = 'black'
+      color = 'white'
+    } else {
+      backgroundColor = 'white'
+      color = 'black'
+    }
+
+    this.setState({backgroundColor, color})
+  }
+
   render() {
     const data = {
       welcome: '30 Days Of React',
@@ -60,9 +77,13 @@ class App extends React.Component {
       date: 'Oct 9, 2020',
     }
     const techs = ['HTML', 'CSS', 'JavaScript']
+    const appStyle = {
+      backgroundColor: this.state.backgroundColor,
+      color: this.state.color
+    }
 
     return (
-      <div className='app'>
+      <div className='app' style={appStyle}>
         <Header data={data} />
 
         <Main
@@ -72,6 +93,8 @@ class App extends React.Component {
           loggedIn={this.state.loggedIn}
           handleLogin={this.handleLogin}
           message={this.state.message}
+          changeBackground={this.changeBackground}
+          backgroundColor={this.state.backgroundColor}
         />
 
         <Footer date={new Date()} />

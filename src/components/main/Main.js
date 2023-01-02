@@ -41,6 +41,8 @@ class Main extends React.Component {
       loggedIn,
       handleLogin,
       message,
+      changeBackground,
+      backgroundColor
     } = this.props
 
     const status = loggedIn ? <Welcome /> : <Login />
@@ -64,6 +66,11 @@ class Main extends React.Component {
             <Button
               text='Greet People'
               onClick={greetPeople}
+              style={buttonStyles}
+            />
+            <Button
+              text={backgroundColor === 'white' ? 'Dark mode' : 'Light mode'}
+              onClick={changeBackground}
               style={buttonStyles}
             />
             {
