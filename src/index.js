@@ -1,31 +1,15 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom/client';
-import {
-  TiSocialLinkedinCircular,
-  TiSocialGithubCircular,
-  TiSocialTwitterCircular
-} from 'react-icons/ti'
-
-const Footer = () => (
-  <footer>
-    <h3>30 Days Of React</h3>
-    <div>
-      <TiSocialLinkedinCircular />
-      <TiSocialGithubCircular />
-      <TiSocialTwitterCircular />
-    </div>
-    <div>
-      <small>Copyright &copy; {new Date().getFullYear()}</small>
-    </div>
-  </footer>
-)
+import moment from 'moment'
 
 class App extends Component {
   render() {
     return (
       <div className='App'>
-        <h1>Welcome to the world of Icons</h1>
-        <Footer />
+        <h1>How to use moment</h1>
+        <p>This challenge was started {moment('2022-10-01').fromNow()}</p>
+        <p>The challenge will be over {moment('2023-10-30').fromNow()}</p>
+        <p>Today is {moment(new Date()).format('MMMM DD, YYYY HH:mm')}</p>
       </div>
     )
   }
