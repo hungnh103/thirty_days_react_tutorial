@@ -48,7 +48,17 @@ class App extends Component {
     },
     touched: {
       firstName: false,
-      lastName: false
+      lastName: false,
+      email: false,
+      tel: false,
+      weight: false,
+      country: false,
+      gender: false,
+      html: false,
+      css: false,
+      javascript: false,
+      bio: false,
+      file: false
     }
   }
 
@@ -57,7 +67,8 @@ class App extends Component {
 
     if (type === 'checkbox') {
       this.setState({
-        skills: { ...this.state.skills, [name]: checked }
+        skills: { ...this.state.skills, [name]: checked },
+        touched: { ...this.state.touched, [name]: true }
       })
     } else if (type === 'file') {
       console.log(type, 'check here')
@@ -68,6 +79,7 @@ class App extends Component {
   }
 
   handleBlur = (e) => {
+    console.log(e.target.name)
     const { name } = e.target
     this.setState({
       touched: { ...this.state.touched, [name]: true }
@@ -76,14 +88,83 @@ class App extends Component {
 
   validate = () => {
     const errors = {
-      firstName: ''
+      firstName: null,
+      lastName: null,
+      email: null,
+      tel: null,
+      dateOfBirth: null,
+      weight: null,
+      country: null,
+      gender: null,
+      skills: null,
+      bio: null,
+      file: null
     }
 
     if (
       (this.state.touched.firstName && this.state.firstName.length < 3) ||
       (this.state.touched.firstName && this.state.firstName.length > 12)
     ) {
-      errors.firstName = 'First name must be between 3 and 12'
+      errors.firstName = 'First name must be between 3 and 12 characters'
+    }
+
+    if (
+      (this.state.touched.lastName && this.state.lastName.length < 2) ||
+      (this.state.touched.lastName && this.state.lastName.length > 5)
+    ) {
+      errors.lastName = 'Last name must be between 2 and 5 characters'
+    }
+
+    if (this.state.touched.email && !this.state.email.includes('@')) {
+      errors.email = 'Email must contain @ character'
+    }
+
+    if (this.state.touched.tel && this.state.tel[0] !== '0') {
+      errors.tel = 'Telephone must start with number 0'
+    }
+
+    if (!!this.state.dateOfBirth && new Date(this.state.dateOfBirth) >= new Date()) {
+      errors.dateOfBirth = 'Date of birth must be in the past'
+    }
+
+    if (this.state.touched.weight && Number(this.state.weight) > 100) {
+      errors.weight = 'Weight should not over 100 kg'
+    }
+
+    if (this.state.touched.country && this.state.country === 'Finland') {
+      errors.country = 'Cannot select this country'
+    }
+
+    if (this.state.touched.gender && this.state.gender === 'Other') {
+      errors.gender = 'Please select another option'
+    }
+
+    if (
+      this.state.touched.html ||
+      this.state.touched.css ||
+      this.state.touched.javascript
+    ) {
+      let selectedSkills = 0
+      Object.values(this.state.skills).forEach((e) => {
+        if(e) selectedSkills++
+      })
+
+      console.log(selectedSkills)
+      if (selectedSkills < 2) {
+        errors.skills = 'must select at least 2 skills'
+      }
+    }
+
+    if (this.state.touched.bio && this.state.bio.length < 5) {
+      errors.bio = 'Bio must be longer than 5 characters'
+    }
+
+    if (
+      this.state.touched.file &&
+      !!this.state.file &&
+      !['png', 'jpg', 'jpeg'].includes(this.state.file.name.split('.').pop())
+    ) {
+      errors.file = 'File type must be png, jpg or jpeg'
     }
 
     return errors
@@ -132,8 +213,20 @@ class App extends Component {
   }
 
   render() {
-    let gender = this.state.gender
-    const {firstName} = this.validate()
+    let current_gender = this.state.gender
+    const {
+      firstName,
+      lastName,
+      email,
+      tel,
+      dateOfBirth,
+      weight,
+      country,
+      gender,
+      skills,
+      bio,
+      file
+    } = this.validate()
 
     return (
       <div className='App'>
@@ -149,7 +242,7 @@ class App extends Component {
                 onBlur={this.handleBlur}
                 placeholder='First Name'
               />
-              <small>{firstName}</small>
+              <small className='error-message'>{firstName}</small>
             </div>
 
             <div className='form-group'>
@@ -158,8 +251,10 @@ class App extends Component {
                 type="text"
                 name='lastName'
                 onChange={this.handleChange}
+                onBlur={this.handleBlur}
                 placeholder='Last Name'
               />
+              <small className='error-message'>{lastName}</small>
             </div>
 
             <div className='form-group'>
@@ -168,8 +263,10 @@ class App extends Component {
                 type="email"
                 name='email'
                 onChange={this.handleChange}
+                onBlur={this.handleBlur}
                 placeholder='Email'
               />
+              <small className='error-message'>{email}</small>
             </div>
 
             <div className='form-group'>
@@ -178,8 +275,10 @@ class App extends Component {
                 type="tel"
                 name='tel'
                 onChange={this.handleChange}
+                onBlur={this.handleBlur}
                 placeholder='Telephone'
               />
+              <small className='error-message'>{tel}</small>
             </div>
 
             <div className='form-group'>
@@ -190,6 +289,7 @@ class App extends Component {
                 onChange={this.handleChange}
                 placeholder='Date of birth'
               />
+              <small className='error-message'>{dateOfBirth}</small>
             </div>
 
             <div className='form-group'>
@@ -208,8 +308,10 @@ class App extends Component {
                 type="number"
                 name='weight'
                 onChange={this.handleChange}
+                onBlur={this.handleBlur}
                 placeholder='Weight in Kg'
               />
+              <small className='error-message'>{weight}</small>
             </div>
 
             <div className='form-group'>
@@ -219,9 +321,11 @@ class App extends Component {
                 name="country"
                 id="country"
                 onChange={this.handleChange}
+                onBlur={this.handleBlur}
               >
                 {selectOptions}
               </select>
+              <small className='error-message'>{country}</small>
             </div>
 
             <div className='form-group'>
@@ -233,7 +337,8 @@ class App extends Component {
                   name='gender'
                   value='Female'
                   onChange={this.handleChange}
-                  checked={gender === 'Female'}
+                  onBlur={this.handleBlur}
+                  checked={current_gender === 'Female'}
                 />
                 <label htmlFor="female">Female</label>
               </div>
@@ -245,7 +350,8 @@ class App extends Component {
                   name='gender'
                   value='Male'
                   onChange={this.handleChange}
-                  checked={gender === 'Male'}
+                  onBlur={this.handleBlur}
+                  checked={current_gender === 'Male'}
                 />
                 <label htmlFor="male">Male</label>
               </div>
@@ -257,10 +363,12 @@ class App extends Component {
                   name='gender'
                   value='Other'
                   onChange={this.handleChange}
-                  checked={gender === 'Other'}
+                  onBlur={this.handleBlur}
+                  checked={current_gender === 'Other'}
                 />
                 <label htmlFor='other'>Other</label>
               </div>
+              <small className='error-message'>{gender}</small>
             </div>
 
             <div className='form-group'>
@@ -294,6 +402,7 @@ class App extends Component {
                 />
                 <label htmlFor="javascript">Javascript</label>
               </div>
+              <small className='error-message'>{skills}</small>
             </div>
 
             <div className='form-group'>
@@ -305,17 +414,24 @@ class App extends Component {
                 cols="50"
                 rows="10"
                 onChange={this.handleChange}
+                onBlur={this.handleBlur}
                 placeholder='Write about yourself ...'
               >
               </textarea>
+              <small className='error-message'>{bio}</small>
             </div>
 
             <div className='form-group'>
+              <label htmlFor="avatar">Avatar</label>
+              <br />
               <input
+                id='avatar'
                 type="file"
                 name='file'
                 onChange={this.handleChange}
+                onBlur={this.handleBlur}
               />
+              <small className='error-message'>{file}</small>
             </div>
 
             <div className='form-group'>
