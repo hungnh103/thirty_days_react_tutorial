@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom/client';
+import axios from 'axios'
 
 const Country = ({
   country: { name, capital, flag, languages, population, currency }
@@ -55,13 +56,10 @@ class App extends Component {
 
     // const url = 'https://restcountries.com/v2/regionalbloc/al?fields=name,capital,flag,languages,population,currencies'
 
-    // fetch(url)
+    // axios
+    //   .get(url)
     //   .then((response) => {
-    //     return response.json()
-    //   })
-    //   .then((data) =>{
-    //     console.log(data)
-    //     this.setState({ data })
+    //     this.setState({ data: response.data })
     //   })
     //   .catch((error) => {
     //     console.log(error)
@@ -69,13 +67,13 @@ class App extends Component {
   }
 
   fetchCountryData = async () => {
-    const url = 'https://restcountries.com/v2/regionalbloc/al?fields=name,capital,flag,languages,population,currencies'
+    const url = 'https://restcountries.com/v2/regionalbloc/eu?fields=name,capital,flag,languages,population,currencies'
 
     try {
-      const response = await fetch(url)
-      const data = await response.json()
+      const response = await axios.get(url)
+      const data = await response.data
       this.setState({ data })
-    } catch (error) {
+    } catch(error) {
       console.log(error)
     }
   }
