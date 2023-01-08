@@ -1,8 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+
+const App = () => {
+  const url = 'https://media.istockphoto.com/id/1311993425/photo/cat-world.jpg?b=1&s=170667a&w=0&k=20&c=IGWziVF64jrhp9pszNmaZT4hA1PFq2KuFfrRPFgfRxs='
+
+  const [image, setImage] = useState(url)
+
+  const changeAnimal = () => {
+    let dogURL = 'https://s3.amazonaws.com/cdn-origin-etr.akc.org/wp-content/uploads/2017/11/12153852/American-Eskimo-Dog-standing-in-the-grass-in-bright-sunlight-400x267.jpg'
+
+    let catURL = 'https://media.istockphoto.com/id/1311993425/photo/cat-world.jpg?b=1&s=170667a&w=0&k=20&c=IGWziVF64jrhp9pszNmaZT4hA1PFq2KuFfrRPFgfRxs='
+
+    let result = image === catURL ? dogURL : catURL
+    setImage(result)
+  }
+
+  return (
+    <div className='App'>
+      <h1>30 Days Of React</h1>
+      <div className='animal'>
+        <img src={image} alt="animal" style={{height: 300}} />
+      </div>
+
+      <button onClick={changeAnimal}>
+        Change
+      </button>
+    </div>
+  )
+}
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -10,8 +35,3 @@ root.render(
     <App />
   </React.StrictMode>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
