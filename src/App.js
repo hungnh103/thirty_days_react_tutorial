@@ -1,25 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useRef } from 'react'
+import Header from './components/Header'
+import Main from './components/Main'
+import './App.css'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const genHexaColor = () => {
+  const charSet = '0123456789abcdef'
+  let colorCode = '#'
+
+  for (let i=0; i<6; i++) {
+    colorCode += charSet[Math.floor(Math.random() * 16)]
+  }
+
+  return colorCode
 }
 
-export default App;
+const App = () => {
+  const defaultAmount = 27
+
+  const defaultColorList = (num = defaultAmount) => {
+    return Array.from(Array(num).keys()).map((n) => {
+      return genHexaColor()
+    })
+  }
+
+  const initialState = {
+    numOfColors: '',
+    colors: defaultColorList()
+  }
+
+  const [data, setData] = useState(initialState)
+  const userInput = useRef(null)
+
+  const onClick = () => {
+    const newColorList = defaultColorList(Number(userInput.current.value) || defaultAmount)
+    setData({ ...data, colors: newColorList })
+  }
+
+  return (
+    <div className='App'>
+      <Header />
+      <Main data={data} onClick={onClick} userInput={userInput} />
+    </div>
+  )
+}
+
+export default App
