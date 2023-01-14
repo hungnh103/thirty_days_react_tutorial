@@ -1,0 +1,10 @@
+.cat-detail {
+  margin-left: 20px;
+  min-width: 200px;
+  position: fixed;
+  right: 0;
+}
+
+.cat-detail img {
+  width: 200px;
+}

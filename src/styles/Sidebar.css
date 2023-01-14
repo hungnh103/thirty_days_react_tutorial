@@ -1,0 +1,20 @@
+.sidebar {
+  max-width: 220px;
+  position: fixed;
+}
+
+.sidebar a {
+  font-size: 14px;
+  text-transform: uppercase;
+  border-radius: 5px;
+  border: 1px solid;
+  margin: 3px;
+  padding: 5px;
+  display: inline-block;
+  text-decoration: none;
+  color: gray;
+}
+
+.sidebar a:visited {
+  color: gray;
+}
