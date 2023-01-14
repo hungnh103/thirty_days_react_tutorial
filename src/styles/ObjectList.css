@@ -1,0 +1,31 @@
+.list-content {
+  max-width: 700px;
+  margin-left: 220px;
+}
+
+.cat-info ul {
+  list-style-type: none;
+}
+
+.cat-info ul li {
+  line-height: 22px;
+}
+
+.cat-info .name {
+  text-transform: uppercase;
+  color: blue;
+  text-decoration: underline;
+}
+
+.cat-info .name:hover {
+  cursor: pointer;
+}
+
+.cat-info .country {
+  font-weight: bold;
+}
+
+.cat-info span.title {
+  color: gray;
+  font-weight: 500;
+}
