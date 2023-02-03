@@ -56,6 +56,11 @@
       padding: 22px;
       background: white;
 
+      &:hover {
+        transform: scale(1.02);
+        box-shadow: 0 0 3px 3px rgb(44 44 44 / 20%)
+      }
+
       &__flag {
         text-align: center;
         padding: 20px;
