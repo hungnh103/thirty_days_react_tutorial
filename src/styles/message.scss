@@ -1,0 +1,98 @@
+.message-wrapper {
+  border: 1px solid gray;
+  border-radius: 3px;
+  padding: 5px;
+  margin-bottom: 5px;
+
+  &__user-info {
+    height: 40px;
+    line-height: 40px;
+
+    .avatar {
+      font-size: 30px;
+      line-height: 30px;
+      vertical-align: middle;
+      margin-right: 7px;
+    }
+
+    .username {
+      font-weight: bold;
+      margin-right: 5px;
+      font-size: 13pt;
+    }
+
+    .nickname {
+      color: gray;
+      font-size: 10pt;
+    }
+  }
+
+  &__body {
+    .display-section {
+      &__content {
+        line-height: 27px;
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+
+      &__footer {
+        display: flex;
+        justify-content: space-between;
+
+        .action-buttons {
+          button {
+            border: none;
+            background: none;
+            margin: 5px;
+            color: #92d0f0;
+
+            &:hover {
+              cursor: pointer;
+            }
+          }
+
+          .edit-btn:hover {
+            color: #1da1f2;
+          }
+
+          .delete-btn:hover {
+            color: #dd1717;
+          }
+        }
+
+        .timestamp {
+          padding-top: 5px;
+        }
+      }
+    }
+
+    .form-update-section {
+      display: none;
+
+      textarea {
+        width: -webkit-fill-available;
+      }
+
+      button {
+        border: none;
+        margin: 3px;
+        border-radius: 3px;
+        color: white;
+        font-size: 10pt;
+        padding: 6px 12px;
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+
+      .save-btn {
+        background: #1da1f2;
+      }
+
+      .cancel-btn {
+        background: gray;
+      }
+    }
+  }
+}
